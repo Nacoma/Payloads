@@ -15,12 +15,22 @@ class Transformer
 
     public function transform(ReflectionClass $ref, array $payload): array
     {
-        $transform = function (ReflectionProperty $property, array $payload) {
+        /**
+         * @param ReflectionProperty $property
+         * @param array $payload
+         * @return array
+         */
+        $transform = function (ReflectionProperty $property, array $payload): array {
             return $payload;
         };
 
         foreach ($this->transformers as $transformer) {
-            $transform = function (ReflectionProperty $property, array $payload) use ($transformer, $transform) {
+            /**
+             * @param ReflectionProperty $property
+             * @param array $payload
+             * @return array
+             */
+            $transform = function (ReflectionProperty $property, array $payload) use ($transformer, $transform): array {
                 return $transformer->transform($property, $payload, $transform);
             };
         }

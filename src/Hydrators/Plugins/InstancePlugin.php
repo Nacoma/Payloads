@@ -14,10 +14,12 @@ class InstancePlugin implements PluginInterface
             $type = (string)$property->getType();
 
             if ($attr->getArguments()) {
-                $type = $attr->getArguments()[0];
+                $type = (string)$attr->getArguments()[0];
             }
 
-            return $next($property, new $type($value));
+            if (class_exists($type)) {
+                return $next($property, new $type($value));
+            }
         }
 
         return $next($property, $value);

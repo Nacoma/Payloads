@@ -2,9 +2,9 @@
 
 namespace Nacoma\Payloads\Rules;
 
-use Nacoma\Payloads\Rules\AttributeInterface;
 use ReflectionAttribute;
 use ReflectionClass;
+use function class_exists;
 
 final class Compiler
 {
@@ -29,13 +29,15 @@ final class Compiler
     {
         $class = $attr->getName();
 
-        $ref = new ReflectionClass($class);
+        if (class_exists($class)) {
+            $ref = new ReflectionClass($class);
 
-        if ($ref->implementsInterface(AttributeInterface::class)) {
-            /** @var AttributeInterface $instance */
-            $instance = new $class(...$attr->getArguments());
+            if ($ref->implementsInterface(AttributeInterface::class)) {
+                /** @var AttributeInterface $instance */
+                $instance = $ref->newInstance(...$attr->getArguments());
 
-            return $instance->getValidationRules();
+                return $instance->getValidationRules();
+            }
         }
 
         return [];

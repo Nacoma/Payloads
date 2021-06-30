@@ -3,6 +3,7 @@
 namespace Nacoma\Payloads\Hydrators;
 
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 
 class Hydrator
@@ -19,12 +20,12 @@ class Hydrator
     {
         $properties = $class->getProperties();
 
-        $hydrate = function (ReflectionProperty $property, mixed $value) {
+        $hydrate = function (ReflectionProperty $property, mixed $value): mixed {
             return $value;
         };
 
         foreach ($this->plugins as $plugin) {
-            $hydrate = function (ReflectionProperty $property, mixed $value) use ($hydrate, $plugin) {
+            $hydrate = function (ReflectionProperty $property, mixed $value) use ($hydrate, $plugin): mixed {
                 return $plugin->execute($property, $value, $hydrate);
             };
         }

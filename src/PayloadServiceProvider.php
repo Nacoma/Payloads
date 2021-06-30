@@ -2,6 +2,7 @@
 
 namespace Nacoma\Payloads;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Nacoma\Payloads\Hydrators\Plugins\ModelPlugin;
@@ -14,6 +15,10 @@ use function is_object;
 
 class PayloadServiceProvider extends ServiceProvider
 {
+    /**
+     * @psalm-suppress UndefinedInterfaceMethod
+     * @psalm-suppress MixedArgument
+     */
     public function register()
     {
         $this->app->bind(Hydrator::class, function () {
@@ -29,7 +34,7 @@ class PayloadServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->beforeResolving(function ($object, $params, $app) {
+        $this->app->beforeResolving(function (mixed $object, array $params, Application $app): void {
             if (is_string($object) && class_exists($object)) {
                 $ref = new ReflectionClass($object);
 
@@ -45,7 +50,7 @@ class PayloadServiceProvider extends ServiceProvider
             }
         });
 
-        $this->app->afterResolving(function ($object, $app) {
+        $this->app->afterResolving(function (mixed $object, Application $app): void {
             if (is_object($object)) {
                 $ref = new ReflectionClass($object);
 
