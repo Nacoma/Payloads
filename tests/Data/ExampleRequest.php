@@ -3,30 +3,32 @@
 namespace Tests\Data;
 
 use Nacoma\Payloads\Hydrators\Attributes as Hydrate;
+use Nacoma\Payloads\Payload;
 use Nacoma\Payloads\Transformers\Attributes as Transform;
 use Nacoma\Payloads\Rules\Attributes as Rules;
 
+#[Payload]
 class ExampleRequest
 {
     public function __construct(
         #[Rules\Required]
-        public string $name,
+        public string $name = '',
 
         #[Rules\Required]
         #[Rules\Min(13)]
-        public int $age,
+        public int $age = 1,
 
         #[Rules\Required]
         #[Hydrate\Instance]
-        public DataTypeOne $dt1,
+        public ?DataTypeOne $dt1 = null,
 
         #[Rules\Required]
         #[Hydrate\Instance(DataTypeTwo::class)]
-        public DataTypeOne $dt2,
+        public ?DataTypeOne $dt2 = null,
 
         #[Rules\Required]
         #[Transform\Rename('user_id')]
-        public int $user,
+        public ?int $user = null,
     ) {
         //
     }

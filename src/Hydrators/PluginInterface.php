@@ -6,5 +6,5 @@ use ReflectionProperty;
 
 interface PluginInterface
 {
-    public function execute(ReflectionProperty $property, mixed $value, callable $next): mixed;
+    public function execute(Hydrator $hydrator, ReflectionProperty $property, mixed $value, callable $next): mixed;
 }

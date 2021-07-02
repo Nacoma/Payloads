@@ -2,8 +2,12 @@
 
 namespace Tests\Hydrators;
 
+use Nacoma\Payloads\Hydrators\Attributes\Instance;
+use Nacoma\Payloads\Hydrators\Attributes\Iterate;
 use Nacoma\Payloads\Hydrators\Hydrator;
 use Nacoma\Payloads\Hydrators\Plugins\InstancePlugin;
+use Nacoma\Payloads\Hydrators\Plugins\IteratePlugin;
+use Nacoma\Payloads\Internal\PropertyTypeResolver;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tests\Data\DataTypeOne;
@@ -12,6 +16,14 @@ use Tests\Data\ExampleRequest;
 
 class HydratorTest extends TestCase
 {
+    private const SAMPLE_DATA = [
+        'age' => 1,
+        'dt2' => ['id' => 34],
+        'name' => 'yes',
+        'user' => 100,
+        'dt1' => ['id' => 32],
+    ];
+
     /**
      * @test
      * @covers \Nacoma\Payloads\Hydrators\Hydrator
@@ -19,20 +31,12 @@ class HydratorTest extends TestCase
      */
     public function basicHydration(): void
     {
-        $data = [
-            'age' => 1,
-            'dt2' => 34,
-            'name' => 'yes',
-            'user' => 100,
-            'dt1' => 32,
-        ];
-
         $hydrator = new Hydrator([
             new InstancePlugin(),
         ]);
 
         /** @var ExampleRequest $payload */
-        $payload = $hydrator->hydrate(new ReflectionClass(ExampleRequest::class), $data);
+        $payload = $hydrator->hydrate(new ReflectionClass(ExampleRequest::class), self::SAMPLE_DATA);
 
         $this->assertInstanceOf(ExampleRequest::class, $payload);
         $this->assertEquals('yes', $payload->name);
@@ -53,10 +57,10 @@ class HydratorTest extends TestCase
     {
         $data = [
             'age' => 1,
-            'dt2' => 34,
+            'dt2' => ['id' => 34],
             'name' => 'yes',
             'user' => 100,
-            'dt1' => 32,
+            'dt1' => ['id' => 32],
             'dt3' => 34,
         ];
 

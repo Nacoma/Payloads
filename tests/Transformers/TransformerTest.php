@@ -2,6 +2,9 @@
 
 namespace Tests\Transformers;
 
+use Nacoma\Payloads\Internal\PropertyTypeResolver;
+use Nacoma\Payloads\Payload;
+use Nacoma\Payloads\Transformers\Attributes\Rename;
 use Nacoma\Payloads\Transformers\Plugins\RenameAttributePlugin;
 use Nacoma\Payloads\Transformers\Transformer;
 use PHPUnit\Framework\TestCase;
@@ -17,21 +20,31 @@ class TransformerTest extends TestCase
      */
     public function basicTransformations(): void
     {
+        $c = new #[Payload] class {
+            public function __construct(
+                #[Rename("bar")]
+                public ?ExampleRequest $foo = null,
+            )
+            {}
+        };
+
         $payload = [
-            'user_id' => 1,
+            'bar' => [
+                'user_id' => 1,
+            ],
         ];
 
-        $transformer = new Transformer([
+        $transformer = new Transformer(new PropertyTypeResolver(), [
             new RenameAttributePlugin(),
         ]);
 
         $payload = $transformer->transform(
-            new ReflectionClass(ExampleRequest::class),
+            new ReflectionClass($c),
             $payload,
         );
 
-        $this->assertArrayNotHasKey('user_id', $payload);
-        $this->assertArrayHasKey('user', $payload);
-        $this->assertEquals(1, $payload['user']);
+        $this->assertArrayHasKey('foo', $payload);
+        $this->assertArrayHasKey('user', $payload['foo']);
+        $this->assertEquals(1, $payload['foo']['user']);
     }
 }

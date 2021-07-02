@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Nacoma\Payloads\Hydrators\Plugins\ModelPlugin;
 use Nacoma\Payloads\Hydrators\Hydrator;
 use Nacoma\Payloads\Hydrators\Plugins\InstancePlugin;
+use Nacoma\Payloads\Internal\PropertyTypeResolver;
 use Nacoma\Payloads\Transformers\Transformer;
 use Nacoma\Payloads\Transformers\Plugins\RenameAttributePlugin;
 use ReflectionClass;
@@ -29,7 +30,7 @@ class PayloadServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(Transformer::class, function () {
-            return new Transformer([
+            return new Transformer(new PropertyTypeResolver(), [
                 new RenameAttributePlugin(),
             ]);
         });

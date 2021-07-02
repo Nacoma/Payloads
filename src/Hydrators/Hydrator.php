@@ -28,7 +28,7 @@ class Hydrator
 
         foreach ($this->plugins as $plugin) {
             $hydrate = function (ReflectionProperty $property, mixed $value) use ($hydrate, $plugin): mixed {
-                return $plugin->execute($property, $value, $hydrate);
+                return $plugin->execute($this, $property, $value, $hydrate);
             };
         }
 
