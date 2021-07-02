@@ -7,11 +7,11 @@ use Nacoma\Payloads\Rules\BasicRuleStringAttribute;
 use Nacoma\Payloads\Rules\AttributeInterface;
 
 #[Attribute]
-class Min implements AttributeInterface
+class ProhibitedUnless implements AttributeInterface
 {
     use BasicRuleStringAttribute;
 
     public function __construct(
-        public int|float $value,
+        public array $values,
     ) {}
 }

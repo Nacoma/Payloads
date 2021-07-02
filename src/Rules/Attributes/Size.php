@@ -7,7 +7,7 @@ use Nacoma\Payloads\Rules\BasicRuleStringAttribute;
 use Nacoma\Payloads\Rules\AttributeInterface;
 
 #[Attribute]
-class Min implements AttributeInterface
+class Size implements AttributeInterface
 {
     use BasicRuleStringAttribute;
 

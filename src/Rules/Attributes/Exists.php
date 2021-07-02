@@ -3,32 +3,16 @@
 namespace Nacoma\Payloads\Rules\Attributes;
 
 use Attribute;
+use Nacoma\Payloads\Rules\BasicRuleStringAttribute;
 use Nacoma\Payloads\Rules\AttributeInterface;
-use function sprintf;
 
 #[Attribute]
 class Exists implements AttributeInterface
 {
-    private string $tableOrModel;
+    use BasicRuleStringAttribute;
 
-    private ?string $identifierName;
-
-    public function __construct(string $tableOrModel, ?string $identifierName = null)
-    {
-        $this->tableOrModel = $tableOrModel;
-        $this->identifierName = $identifierName;
-    }
-
-    public function getValidationRules(): array
-    {
-        if ($this->identifierName) {
-            return [
-                sprintf('exists:%s,%s', $this->tableOrModel, $this->identifierName),
-            ];
-        }
-
-        return [
-            'exists:' . $this->tableOrModel,
-        ];
-    }
+    public function __construct(
+        public string $table,
+        public ?string $column = null,
+    ) {}
 }

@@ -20,6 +20,8 @@ class Hydrator
     {
         $properties = $class->getProperties();
 
+        $classAttributes = [];
+
         $hydrate = function (ReflectionProperty $property, mixed $value): mixed {
             return $value;
         };
@@ -33,9 +35,11 @@ class Hydrator
         foreach ($properties as $property) {
             $name = $property->getName();
 
-            $attributes[$name] = $hydrate($property, $attributes[$name]);
+            if (isset($attributes[$name])) {
+                $classAttributes[$name] = $hydrate($property, $attributes[$name]);
+            }
         }
 
-        return $class->newInstance(...$attributes);
+        return $class->newInstance(...$classAttributes);
     }
 }
