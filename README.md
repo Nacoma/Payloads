@@ -14,9 +14,9 @@ The optional validation provided by Payloads is a thin, strongly typed, wrapper 
 
 ## Hydration
 
-- [Class Instances](###Instance)
-- [Arrays & Collections](###Iterate)
-- [Eloquent Models](###Model)
+- [Class Instances](#instance)
+- [Arrays & Collections](#iterate-arrays--collections)
+- [Eloquent Models](#models)
 
 ### Instance
 
@@ -69,7 +69,7 @@ new class {
 };
 ```
 
-### Model
+### Models
 
 Eloquent models are automatically fetched from the database:
 
