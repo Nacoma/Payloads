@@ -20,7 +20,7 @@ The optional validation provided by Payloads is a thin, strongly typed, wrapper 
 
 ### Instance
 
-Create an instance of a class from request paremters:
+Create an instance of a class from request parameters:
 
 ```php
 use Nacoma\Payloads\Hydrators\Attributes\Instance;
@@ -31,19 +31,6 @@ new class {
     
     #[Instance(SomeOtherConcrete::class)]
     public SomeClass $someClass2;
-};
-```
-
-Create instances of a specific class explicitly:
-
-```php
-use Nacoma\Payloads\Hydrators\Attributes\Instance;
-
-new class {
-    public function __construct(
-        #[Instance(SomeChildClassOrInterfaceImplementor::class)]
-        public SomeClass $someClass,
-  ) {}
 };
 ```
 
