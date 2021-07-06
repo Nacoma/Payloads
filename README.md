@@ -2,29 +2,85 @@
 
 This is an MVP/POC.
 
-Most validation rules are still missing and there are many bugs/issues. This isn't intended for production use.
-
-
 ## Summary
-Classes with the `#[Payload]` attribute can be resolved from the container and are hydrated automatically with 
-data from the request payload. This enables strong type hints and intellisense for request bodies while decoupling
-the payload from the `Request`.
 
+Classes with the `#[Payload]` attribute can be resolved from the container and are hydrated automatically with data from
+the request payload. This enables strong type hints and intellisense for request bodies while decoupling the payload
+from the `Request`.
 
-### Validation
+## Validation
+
 The optional validation provided by Payloads is a thin, strongly typed, wrapper around Laravel's built-in validation.
 
-### Hydration
-There are currently two types of hydration available:
+## Hydration
 
-- class instances
-  - Properties that are annotated with the `#[Instance]` attribute will be constructed using the data available in the request payload.
-  - This will be changed to not require the `#[Instance]` attribute. 
-- eloquent models
-  - Properties that are type hinted with an eloquent model will be fetched from the database before hydrating the instance.
+- [Class Instances](###Instance)
+- [Arrays & Collections](###Iterate)
+- [Eloquent Models](###Model)
 
+### Instance
 
-## Basic Example
+Create an instance of a class from request paremters:
+
+```php
+use Nacoma\Payloads\Hydrators\Attributes\Instance;
+
+new class {
+    #[Instance]
+    public SomeClass $someClass1;
+    
+    #[Instance(SomeOtherConcrete::class)]
+    public SomeClass $someClass2;
+};
+```
+
+Create instances of a specific class explicitly:
+
+```php
+use Nacoma\Payloads\Hydrators\Attributes\Instance;
+
+new class {
+    public function __construct(
+        #[Instance(SomeChildClassOrInterfaceImplementor::class)]
+        public SomeClass $someClass,
+  ) {}
+};
+```
+
+### Iterate (Arrays & Collections)
+
+The `Iterate` plugin assumes that the type is either an `array` or some type of
+`collection` that takes an `array` of items as the constructor parameter.
+
+```php
+use Nacoma\Payloads\Hydrators\Attributes\Iterate;
+use Illuminate\Support\Collection;
+
+new class {
+    /**
+     * @var SomeClass[] 
+     */
+    #[Iterate(SomeClass::class)]
+    public array $items1;
+    
+    
+    #[Iterate(SomeClass::class)]
+    public \Illuminate\Support\Collection $item2;
+};
+```
+
+### Model
+
+Eloquent models are automatically fetched from the database:
+
+```php
+new class {
+    public User $user;
+};
+```
+
+## More Featured Example
+
 ```php
 
 use YourApp\Models\Country;

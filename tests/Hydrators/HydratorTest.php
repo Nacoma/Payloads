@@ -95,6 +95,7 @@ class HydratorTest extends TestCase
 
         $this->assertEquals(5, $payload->num);
     }
+
     /**
      * @test
      * @covers \Nacoma\Payloads\Hydrators\Hydrator
@@ -108,5 +109,20 @@ class HydratorTest extends TestCase
         $payload = (new Hydrator([]))->hydrate(new ReflectionClass($c), []);
 
         $this->assertEquals(null, $payload->num);
+    }
+
+    /**
+     * @test
+     * @covers \Nacoma\Payloads\Hydrators\Hydrator
+     */
+    public function worksWithProperties(): void
+    {
+        $c = new class {
+            public ?int $num = null;
+        };
+
+        $payload = (new Hydrator([]))->hydrate(new ReflectionClass($c), ['num' => 5]);
+
+        $this->assertEquals(5, $payload->num);
     }
 }

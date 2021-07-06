@@ -40,6 +40,20 @@ class Hydrator
             }
         }
 
-        return $class->newInstance(...$classAttributes);
+        $instance = $class->newInstance(...$classAttributes);
+
+        foreach ($class->getProperties() as $property) {
+            $name = $property->getName();
+
+            if (isset($classAttributes[$name])) {
+                if ($property->isDefault() && $classAttributes[$name] === $property->getDefaultValue()) {
+                    $instance->{$name} = $classAttributes[$name];
+                } else if ($property->isInitialized($instance)) {
+                    $instance->{$name} = $classAttributes[$name];
+                }
+            }
+        }
+
+        return $instance;
     }
 }
