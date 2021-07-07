@@ -36,7 +36,7 @@ new class {
 
 ### Arrays & Collections
 
-The `Iterate` plugin assumes that the type is either an `array` or some type of
+The `MakeList` plugin assumes that the type is either an `array` or some type of
 `collection` that takes an `array` of items as the constructor parameter.
 
 ```php
@@ -58,10 +58,13 @@ new class {
 
 ### Models
 
-Eloquent models are automatically fetched from the database:
+Fetch a model from the database using `FindModel`.
 
 ```php
+use Nacoma\Payloads\Hydrators\Attributes\FindModel;
+
 new class {
+    #[FindModel]
     public User $user;
 };
 ```
@@ -70,7 +73,7 @@ new class {
 
 ```php
 
-use YourApp\Models\Country;
+use Nacoma\Payloads\Hydrators\Attributes\FindModel;use YourApp\Models\Country;
 use Nacoma\Payloads\Rules\Attributes as Rule;
 use Nacoma\Payloads\Payload;
 use Nacoma\Payloads\Transformers\Attributes as Transform;
@@ -89,6 +92,7 @@ class UpdateUser {
         #[Rule\Required]
         #[Rule\Exists('countries', 'id')]
         #[Transform\Rename('country_id')]
+        #[FindModel]
         public Country $country,
     ) {
       //
