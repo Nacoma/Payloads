@@ -19,11 +19,11 @@ class ExampleRequest
         public int $age = 1,
 
         #[Rules\Required]
-        #[Hydrate\Instance]
+        #[Hydrate\MakeInstance]
         public ?DataTypeOne $dt1 = null,
 
         #[Rules\Required]
-        #[Hydrate\Instance(DataTypeTwo::class)]
+        #[Hydrate\MakeInstance(DataTypeTwo::class)]
         public ?DataTypeOne $dt2 = null,
 
         #[Rules\Required]

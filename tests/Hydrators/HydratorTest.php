@@ -2,18 +2,17 @@
 
 namespace Tests\Hydrators;
 
-use Nacoma\Payloads\Hydrators\Attributes\Instance;
-use Nacoma\Payloads\Hydrators\Attributes\Iterate;
 use Nacoma\Payloads\Hydrators\Hydrator;
-use Nacoma\Payloads\Hydrators\Plugins\InstancePlugin;
-use Nacoma\Payloads\Hydrators\Plugins\IteratePlugin;
-use Nacoma\Payloads\Internal\PropertyTypeResolver;
+use Nacoma\Payloads\Hydrators\Plugins\MakeInstancePlugin;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tests\Data\DataTypeOne;
 use Tests\Data\DataTypeTwo;
 use Tests\Data\ExampleRequest;
 
+/**
+ * @uses \Nacoma\Payloads\Internal\PropertyTypeResolver
+ */
 class HydratorTest extends TestCase
 {
     private const SAMPLE_DATA = [
@@ -27,12 +26,12 @@ class HydratorTest extends TestCase
     /**
      * @test
      * @covers \Nacoma\Payloads\Hydrators\Hydrator
-     * @uses \Nacoma\Payloads\Hydrators\Plugins\InstancePlugin
+     * @uses \Nacoma\Payloads\Hydrators\Plugins\MakeInstancePlugin
      */
     public function basicHydration(): void
     {
         $hydrator = new Hydrator([
-            new InstancePlugin(),
+            new MakeInstancePlugin(),
         ]);
 
         /** @var ExampleRequest $payload */
@@ -51,7 +50,7 @@ class HydratorTest extends TestCase
     /**
      * @test
      * @covers \Nacoma\Payloads\Hydrators\Hydrator
-     * @uses \Nacoma\Payloads\Hydrators\Plugins\InstancePlugin
+     * @uses \Nacoma\Payloads\Hydrators\Plugins\MakeInstancePlugin
      */
     public function removesExtraAttributes(): void
     {
@@ -65,7 +64,7 @@ class HydratorTest extends TestCase
         ];
 
         $hydrator = new Hydrator([
-            new InstancePlugin(),
+            new MakeInstancePlugin(),
         ]);
 
         /** @var ExampleRequest $payload */
@@ -100,7 +99,7 @@ class HydratorTest extends TestCase
      * @test
      * @covers \Nacoma\Payloads\Hydrators\Hydrator
      */
-    public function worksWithNullableValues(): void
+    public function nullableConstructorProperties(): void
     {
         $c = new class {
             public function __construct(public ?int $num = null) {}
@@ -115,7 +114,7 @@ class HydratorTest extends TestCase
      * @test
      * @covers \Nacoma\Payloads\Hydrators\Hydrator
      */
-    public function worksWithProperties(): void
+    public function nullableProperties(): void
     {
         $c = new class {
             public ?int $num = null;

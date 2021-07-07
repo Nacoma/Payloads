@@ -19,7 +19,11 @@
 
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
               processUncoveredFiles="true">
+        <exclude>
+            <directory suffix=".php">src/Rules/Attributes</directory>
+        </exclude>
         <include>
+
             <directory suffix=".php">src</directory>
         </include>
     </coverage>

@@ -5,7 +5,7 @@ namespace Nacoma\Payloads\Hydrators\Attributes;
 use Attribute;
 
 #[Attribute]
-class Instance
+class MakeInstance
 {
     public function __construct(string $fqcn = null)
     {

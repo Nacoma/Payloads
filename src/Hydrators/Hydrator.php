@@ -46,9 +46,9 @@ class Hydrator
             $name = $property->getName();
 
             if (isset($classAttributes[$name])) {
-                if ($property->isDefault() && $classAttributes[$name] === $property->getDefaultValue()) {
+                if (!$property->isInitialized($instance)) {
                     $instance->{$name} = $classAttributes[$name];
-                } else if ($property->isInitialized($instance)) {
+                } else if ($property->isDefault()) {
                     $instance->{$name} = $classAttributes[$name];
                 }
             }

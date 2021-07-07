@@ -3,20 +3,20 @@
 namespace Tests\Hydrators\Plugins;
 
 use Illuminate\Support\Collection;
-use Nacoma\Payloads\Hydrators\Attributes\Iterate;
+use Nacoma\Payloads\Hydrators\Attributes\MakeList;
 use Nacoma\Payloads\Hydrators\Hydrator;
-use Nacoma\Payloads\Hydrators\Plugins\InstancePlugin;
-use Nacoma\Payloads\Hydrators\Plugins\IteratePlugin;
-use Nacoma\Payloads\Internal\PropertyTypeResolver;
+use Nacoma\Payloads\Hydrators\Plugins\MakeInstancePlugin;
+use Nacoma\Payloads\Hydrators\Plugins\MakeListPlugin;
 use Nacoma\Payloads\Payload;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tests\Data\DataTypeOne;
 
 /**
- * @covers \Nacoma\Payloads\Hydrators\Plugins\IteratePlugin
+ * @covers \Nacoma\Payloads\Hydrators\Plugins\MakeListPlugin
  * @uses   \Nacoma\Payloads\Hydrators\Hydrator
- * @uses   \Nacoma\Payloads\Hydrators\Plugins\InstancePlugin
+ * @uses   \Nacoma\Payloads\Hydrators\Plugins\MakeInstancePlugin
+ * @uses   \Nacoma\Payloads\Internal\PropertyTypeResolver
  */
 class IteratePluginTest extends TestCase
 {
@@ -29,7 +29,7 @@ class IteratePluginTest extends TestCase
     {
         $c = new #[Payload] class {
             public function __construct(
-                #[Iterate(DataTypeOne::class)]
+                #[MakeList(DataTypeOne::class)]
                 public array $values = [],
             )
             {
@@ -58,7 +58,7 @@ class IteratePluginTest extends TestCase
     {
         $c = new #[Payload] class {
             public function __construct(
-                #[Iterate(DataTypeOne::class)]
+                #[MakeList(DataTypeOne::class)]
                 public ?Collection $values = null,
             )
             {
@@ -82,8 +82,8 @@ class IteratePluginTest extends TestCase
         parent::setUp();
 
         $this->hydrator = new Hydrator([
-            new IteratePlugin(),
-            new InstancePlugin(),
+            new MakeListPlugin(),
+            new MakeInstancePlugin(),
         ]);
     }
 }

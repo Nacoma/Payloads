@@ -2,7 +2,7 @@
 
 namespace Nacoma\Payloads\Hydrators\Plugins;
 
-use Nacoma\Payloads\Hydrators\Attributes\Iterate;
+use Nacoma\Payloads\Hydrators\Attributes\MakeList;
 use Nacoma\Payloads\Hydrators\Hydrator;
 use Nacoma\Payloads\Hydrators\PluginInterface;
 use Nacoma\Payloads\Internal\PropertyTypeResolver;
@@ -10,7 +10,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use function class_exists;
 
-class IteratePlugin implements PluginInterface
+class MakeListPlugin implements PluginInterface
 {
     private PropertyTypeResolver $propertyTypeResolver;
 
@@ -26,7 +26,7 @@ class IteratePlugin implements PluginInterface
 
     public function execute(Hydrator $hydrator, ReflectionProperty $property, mixed $value, callable $next): mixed
     {
-        foreach ($property->getAttributes(Iterate::class) as $attr) {
+        foreach ($property->getAttributes(MakeList::class) as $attr) {
             $type = $attr->getArguments()[0];
 
             $items = [];

@@ -5,9 +5,9 @@ namespace Nacoma\Payloads;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Nacoma\Payloads\Hydrators\Plugins\ModelPlugin;
+use Nacoma\Payloads\Hydrators\Plugins\FindModelPlugin;
 use Nacoma\Payloads\Hydrators\Hydrator;
-use Nacoma\Payloads\Hydrators\Plugins\InstancePlugin;
+use Nacoma\Payloads\Hydrators\Plugins\MakeInstancePlugin;
 use Nacoma\Payloads\Internal\PropertyTypeResolver;
 use Nacoma\Payloads\Transformers\Transformer;
 use Nacoma\Payloads\Transformers\Plugins\RenameAttributePlugin;
@@ -24,8 +24,8 @@ class PayloadServiceProvider extends ServiceProvider
     {
         $this->app->bind(Hydrator::class, function () {
             return new Hydrator([
-                new InstancePlugin(),
-                new ModelPlugin(),
+                new MakeInstancePlugin(),
+                new FindModelPlugin(),
             ]);
         });
 

@@ -11,8 +11,9 @@ use ReflectionClass;
 use Tests\Data\ExampleRequest;
 
 /**
- * @uses \Nacoma\Payloads\Rules\Attributes\Min
- * @uses \Nacoma\Payloads\Rules\Attributes\Max
+ * @uses   \Nacoma\Payloads\Rules\Attributes\Min
+ * @uses   \Nacoma\Payloads\Rules\Attributes\Max
+ * @uses   \Nacoma\Payloads\Internal\PropertyTypeResolver
  */
 class CompilerTest extends TestCase
 {
@@ -59,6 +60,7 @@ class CompilerTest extends TestCase
     /**
      * @test
      * @covers \Nacoma\Payloads\Rules\Compiler
+     * @covers \Nacoma\Payloads\Rules\Attributes\Required
      */
     public function worksOnArrays(): void
     {
@@ -67,7 +69,9 @@ class CompilerTest extends TestCase
                 #[Rules\ListType(ExampleRequest::class)]
                 #[Rules\Required]
                 public array $requests = [],
-            ) {}
+            )
+            {
+            }
         };
 
         $compiler = new Compiler(new PropertyTypeResolver());

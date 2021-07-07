@@ -11,12 +11,15 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tests\Data\ExampleRequest;
 
+/**
+ * @uses   \Nacoma\Payloads\Internal\PropertyTypeResolver
+ */
 class TransformerTest extends TestCase
 {
     /**
      * @test
      * @covers \Nacoma\Payloads\Transformers\Transformer
-     * @uses \Nacoma\Payloads\Transformers\Plugins\RenameAttributePlugin
+     * @uses   \Nacoma\Payloads\Transformers\Plugins\RenameAttributePlugin
      */
     public function basicTransformations(): void
     {
@@ -25,7 +28,8 @@ class TransformerTest extends TestCase
                 #[Rename("bar")]
                 public ?ExampleRequest $foo = null,
             )
-            {}
+            {
+            }
         };
 
         $payload = [

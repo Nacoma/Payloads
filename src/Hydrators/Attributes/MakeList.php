@@ -3,13 +3,11 @@
 namespace Nacoma\Payloads\Hydrators\Attributes;
 
 use Attribute;
-use Nacoma\Payloads\Hydrators\PluginInterface;
 
 #[Attribute]
-class Iterate
+class MakeList
 {
     public function __construct(
         public string $fqcn,
-    )
-    {}
+    ) {}
 }

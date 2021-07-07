@@ -15,7 +15,7 @@ The optional validation provided by Payloads is a thin, strongly typed, wrapper 
 ## Hydration
 
 - [Class Instances](#instance)
-- [Arrays & Collections](#iterate-arrays--collections)
+- [Arrays & Collections](#arrays--collections)
 - [Eloquent Models](#models)
 
 ### Instance
@@ -23,36 +23,36 @@ The optional validation provided by Payloads is a thin, strongly typed, wrapper 
 Create an instance of a class from request parameters:
 
 ```php
-use Nacoma\Payloads\Hydrators\Attributes\Instance;
+use Nacoma\Payloads\Hydrators\Attributes\MakeInstance;
 
 new class {
-    #[Instance]
+    #[MakeInstance]
     public SomeClass $someClass1;
     
-    #[Instance(SomeOtherConcrete::class)]
+    #[MakeInstance(SomeOtherConcrete::class)]
     public SomeClass $someClass2;
 };
 ```
 
-### Iterate (Arrays & Collections)
+### Arrays & Collections
 
 The `Iterate` plugin assumes that the type is either an `array` or some type of
 `collection` that takes an `array` of items as the constructor parameter.
 
 ```php
-use Nacoma\Payloads\Hydrators\Attributes\Iterate;
+use Nacoma\Payloads\Hydrators\Attributes\MakeList;
 use Illuminate\Support\Collection;
 
 new class {
     /**
      * @var SomeClass[] 
      */
-    #[Iterate(SomeClass::class)]
+    #[MakeList(SomeClass::class)]
     public array $items1;
     
     
-    #[Iterate(SomeClass::class)]
-    public \Illuminate\Support\Collection $item2;
+    #[MakeList(SomeClass::class)]
+    public Collection $item2;
 };
 ```
 

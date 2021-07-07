@@ -2,13 +2,13 @@
 
 namespace Nacoma\Payloads\Hydrators\Plugins;
 
-use Nacoma\Payloads\Hydrators\Attributes\Instance;
+use Nacoma\Payloads\Hydrators\Attributes\MakeInstance;
 use Nacoma\Payloads\Hydrators\Hydrator;
 use Nacoma\Payloads\Hydrators\PluginInterface;
 use Nacoma\Payloads\Internal\PropertyTypeResolver;
 use ReflectionProperty;
 
-class InstancePlugin implements PluginInterface
+class MakeInstancePlugin implements PluginInterface
 {
     private PropertyTypeResolver $propertyTypeResolver;
 
@@ -23,7 +23,7 @@ class InstancePlugin implements PluginInterface
 
     public function execute(Hydrator $hydrator, ReflectionProperty $property, mixed $value, callable $next): mixed
     {
-        foreach ($property->getAttributes(Instance::class) as $attr) {
+        foreach ($property->getAttributes(MakeInstance::class) as $attr) {
             $type = (string)$this->propertyTypeResolver->resolve($property);
 
             if ($attr->getArguments()) {
