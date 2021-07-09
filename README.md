@@ -1,5 +1,10 @@
 # Payloads
 
+[![tests](https://github.com/Nacoma/Payloads/actions/workflows/tests.yml/badge.svg)](https://github.com/Nacoma/Payloads/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/Nacoma/Payloads/branch/main/graph/badge.svg?token=EPEZ3CHOGZ)](https://codecov.io/gh/Nacoma/Payloads)
+
+
+
 This is an MVP/POC.
 
 ## Summary
