@@ -6,6 +6,7 @@ use Nacoma\Payloads\Rules\AttributeInterface;
 use Nacoma\Payloads\Rules\Attributes\Exists;
 use Nacoma\Payloads\Rules\Attributes\Max;
 use Nacoma\Payloads\Rules\Attributes\Min;
+use Nacoma\Payloads\Rules\Attributes\StringRule;
 use PHPUnit\Framework\TestCase;
 
 class BasicRuleStringAttributeTest extends TestCase
@@ -26,6 +27,10 @@ class BasicRuleStringAttributeTest extends TestCase
     public function provider(): array
     {
         return [
+            [
+                'string',
+                new StringRule(),
+            ],
             [
                 'min:0',
                 new Min(0),
