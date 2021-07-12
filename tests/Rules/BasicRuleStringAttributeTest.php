@@ -7,6 +7,7 @@ use Nacoma\Payloads\Rules\Attributes\Exists;
 use Nacoma\Payloads\Rules\Attributes\Max;
 use Nacoma\Payloads\Rules\Attributes\Min;
 use Nacoma\Payloads\Rules\Attributes\StringRule;
+use Nacoma\Payloads\Rules\Attributes\Unique;
 use PHPUnit\Framework\TestCase;
 
 class BasicRuleStringAttributeTest extends TestCase
@@ -46,6 +47,22 @@ class BasicRuleStringAttributeTest extends TestCase
             [
                 'exists:x,y',
                 new Exists('x', 'y'),
+            ],
+            [
+                'unique:x,y',
+                new Unique('x', 'y'),
+            ],
+            [
+                'unique:x,y,a',
+                new Unique('x', 'y', 'a'),
+            ],
+            [
+                'unique:x,y,a',
+                new Unique('x', 'y', null, 'a'),
+            ],
+            [
+                'unique:x,y,a,b',
+                new Unique('x', 'y', 'a', 'b'),
             ],
         ];
     }

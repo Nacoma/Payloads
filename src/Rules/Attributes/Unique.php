@@ -14,7 +14,7 @@ class Unique implements AttributeInterface
     public function __construct(
         public string $table,
         public string $column,
-        public string $except,
-        public string $idColumn,
+        public ?string $except = null,
+        public ?string $idColumn = null,
     ) {}
 }
